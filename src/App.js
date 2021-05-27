@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-const API = "21823321-99bf56fc4f3ba320d995d1fbf";
+import ImagesCard from "./components/ImagesCard";
 
 function App() {
-  const [image, setImage] = useState([]);
+  const [images, setImages] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [term, setTerm] = useState("");
 
@@ -13,15 +13,19 @@ function App() {
     )
       .then((res) => res.json())
       .then((data) => {
-        setImage(data.hits);
+        setImages(data.hits);
         setIsLoading(false);
       })
       .catch((err) => console.log(err));
   });
 
   return (
-    <div className="App">
-      <h1 className="text-6xl font-semibold">Yoooooo</h1>
+    <div className="container mx-auto">
+      <div className="grid grid-cols-3 gap-4">
+        {images.map((image) => (
+          <ImagesCard key={image.id} image={image} />
+        ))}
+      </div>
     </div>
   );
 }
